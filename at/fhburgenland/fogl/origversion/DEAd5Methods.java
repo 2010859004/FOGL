@@ -71,7 +71,7 @@ public class DEAd5Methods {
     }
 
     public static void fileMode(){
-        File file = new File(DEAd5Constants.FILE_LOCATION);
+        File file = new File(".\\file.txt");
         int check;
 
         try {
