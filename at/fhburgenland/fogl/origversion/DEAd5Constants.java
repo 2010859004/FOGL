@@ -1,3 +1,5 @@
+package at.fhburgenland.fogl.origversion;
+
 public interface DEAd5Constants {
 
     // Konstanten für die Zustände des DEA

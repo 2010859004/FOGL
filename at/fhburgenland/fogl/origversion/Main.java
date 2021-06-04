@@ -1,3 +1,5 @@
+package at.fhburgenland.fogl.origversion;
+
 import java.util.Scanner;
 
 public class Main {
