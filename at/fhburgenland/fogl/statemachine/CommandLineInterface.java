@@ -5,6 +5,7 @@ import at.fhburgenland.fogl.statemachine.divedby5.StateMachineCreator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.function.Function;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,13 +16,17 @@ import java.util.Scanner;
 public class CommandLineInterface {
 
   private Scanner scanner;
+  private final Function<String, StateMachine> stateMachineCreator;
+  private final File file;
+  private final String inputQuestion;
 
-  public static void main(String[] args) {
-    new CommandLineInterface()
-        .startMenu();
+  public CommandLineInterface(Function<String, StateMachine> stateMachineCreator, File file, String inputQuestion) {
+    this.stateMachineCreator = stateMachineCreator;
+    this.file = file;
+    this.inputQuestion = inputQuestion;
   }
 
-  private void startMenu() {
+  public void startMenu() {
     try {
       scanner = new Scanner(System.in);
       String option;
@@ -35,13 +40,13 @@ public class CommandLineInterface {
         switch (option) {
           case "1" -> {
             System.out.println();
-            String input = askForInput();
-            validateInput(input);
+            String input = askForInput(inputQuestion);
+            validateInput(stateMachineCreator.apply(input));
             return;
           }
           case "2" -> {
             System.out.println();
-            fileMode();
+            fileMode(file);
             return;
           }
           case "3" -> {
@@ -61,14 +66,13 @@ public class CommandLineInterface {
     }
   }
 
-  private void validateInput(String input) {
-    final StateMachine machine = StateMachineCreator.createDivideBy5StateMachine(input);
+  private void validateInput(StateMachine machine) {
     final Result validate = machine.validate();
     System.out.println(validate.getResultText());
   }
 
-  private String askForInput() {
-    System.out.print("Bitte geben Sie eine Zahl ein: ");
+  private String askForInput(String inputQuestion) {
+    System.out.print(inputQuestion);
     return scanner.nextLine();
   }
 
@@ -85,15 +89,14 @@ public class CommandLineInterface {
     System.out.println("*************************************************");
   }
 
-  private void fileMode(){
-    File file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "file.txt");
+  private void fileMode(File file) {
 
     try {
       Scanner fileReader = new Scanner(file);
 
-      while(fileReader.hasNextLine()){
+      while (fileReader.hasNextLine()) {
         String currentLine = fileReader.nextLine();
-        validateInput(currentLine);
+        validateInput(stateMachineCreator.apply(currentLine));
       }
       fileReader.close();
     } catch (FileNotFoundException e) {
