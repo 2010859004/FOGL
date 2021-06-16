@@ -1,6 +1,7 @@
 package at.fhburgenland.fogl.statemachine.uebung3;
 
 import at.fhburgenland.fogl.statemachine.CommandLineInterface;
+import at.fhburgenland.fogl.statemachine.DBConfiguration;
 
 import java.io.File;
 
@@ -18,7 +19,8 @@ public class Uebung3AppStarter {
     final File file = new File(System.getProperty("user.dir") + separator +
         filePath
     );
-    new CommandLineInterface(StateMachineCreator::createMathFormulaStateMachine, file, "Bitte geben Sie ein Formel ein:")
+    final DBConfiguration dbConfiguration = new DBConfiguration("jdbc:postgresql://10.11.12.13:5432/fogl-db", "bswe", "fogl", "SELECT * FROM Formeln");
+    new CommandLineInterface(StateMachineCreator::createMathFormulaStateMachine, file, "Bitte geben Sie eine Formel ein:", dbConfiguration)
         .startMenu();
   }
 }
