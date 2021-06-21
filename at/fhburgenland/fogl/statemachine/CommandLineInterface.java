@@ -1,6 +1,5 @@
 package at.fhburgenland.fogl.statemachine;
 
-import at.fhburgenland.fogl.origversion.DEAd5Constants;
 import at.fhburgenland.fogl.origversion.DEAd5Methods;
 
 import java.io.File;
@@ -72,6 +71,7 @@ public class CommandLineInterface {
 
   private void validateInput(StateMachine machine) {
     final Result validate = machine.validate();
+    validate.getType().printWithAnsiColor();
     System.out.println(validate.getResultText());
   }
 
@@ -109,7 +109,7 @@ public class CommandLineInterface {
     }
   }
 
-  private void runDBMode(){
+  private void runDBMode() {
     Connection con;
     PreparedStatement pst;
 
@@ -122,7 +122,7 @@ public class CommandLineInterface {
       pst = con.prepareStatement(dbQuery);
       ResultSet rs = pst.executeQuery();
 
-      while(rs.next()){
+      while (rs.next()) {
         String nextLine = rs.getString(1);
         validateInput(stateMachineCreator.apply(nextLine));
       }

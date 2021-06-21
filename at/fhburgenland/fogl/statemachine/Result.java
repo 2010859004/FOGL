@@ -13,4 +13,7 @@ public interface Result {
    * @return the generated resultText.
    */
   String getResultText();
+
+  ResultType getType();
 }
+

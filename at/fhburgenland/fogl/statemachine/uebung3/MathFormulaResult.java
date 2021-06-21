@@ -1,6 +1,7 @@
 package at.fhburgenland.fogl.statemachine.uebung3;
 
 import at.fhburgenland.fogl.statemachine.Result;
+import at.fhburgenland.fogl.statemachine.ResultType;
 
 import java.util.StringJoiner;
 
@@ -22,6 +23,11 @@ class MathFormulaResult implements Result {
   @Override
   public String getResultText() {
     return String.format(resultConstant.getMessage(), input);
+  }
+
+  @Override
+  public ResultType getType() {
+    return resultConstant == ResultConstant.VALID ? ResultType.OK : resultConstant == ResultConstant.INPUT_INVALID ? ResultType.INFO : ResultType.ERROR;
   }
 
   @Override

@@ -1,6 +1,7 @@
 package at.fhburgenland.fogl.statemachine.divedby5;
 
 import at.fhburgenland.fogl.statemachine.Result;
+import at.fhburgenland.fogl.statemachine.ResultType;
 
 import java.util.StringJoiner;
 
@@ -22,6 +23,11 @@ class DivideBy5Result implements Result {
   @Override
   public String getResultText() {
     return String.format(resultConstant.getMessage(), input);
+  }
+
+  @Override
+  public ResultType getType() {
+    return resultConstant == ResultConstant.DIVIDABLE_BY_5 ? ResultType.OK : resultConstant == ResultConstant.NOT_DIVIDABLE_BY_5 ? ResultType.INFO : ResultType.ERROR;
   }
 
   @Override
